@@ -1,0 +1,60 @@
+<div
+    <%if(status=='building'){%>
+    class="light-yellow"
+   <% }else{%>
+    class="light-green"
+    <%}%>
+    >
+    <div class="icon">
+        <div class="circle">s</div>
+    </div>
+    <div class="other-info">
+        <div>
+            <span class="agent-name"><%=itemName%></span>| <span class="status"><%=status%></span>  | <span class="ip"><%=ip%></span>|
+            <span class="file-location"><%=fileLocation%></span>
+        </div>
+        <div>
+            <div class="add-resource">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="add-new-resource underline">Specify Resources</span>|
+                <div class="add-resource-prompt  hide">
+                    <span class="add-tip">(seperate multiple resources name with commas)</span>
+                    <input type="text" class="form-control" id="input-resources">
+                   <div class="buttons">
+                       <button class="add-button">Add resources</button>
+                       <button class="close-button">Close</button>
+                   </div>
+                    <div class="triangle"></div>
+                </div>
+
+            </div>
+            <div class="resources">
+                <span>Resources:</span>
+                <%
+                var resourceLength=resources.length;
+                for(var i=0;i<resourceLength;i++){
+                %>
+
+                    <div class="item-resource">
+
+                        <span><%=resources[i]%></span>
+                        <span class="glyphicon glyphicon-remove-circle delete-icon" aria-hidden="true" deleteIndex=<%=i%>>  </span>
+
+                    </div>
+
+                <%}%>
+            </div>
+        </div>
+
+    </div>
+
+<%if(status!='building'){%>
+        <div class="deny-td">
+
+                <div class="deny">
+                    <span class="  glyphicon glyphicon-ban-circle" aria-hidden="true"></span><span class="underline">Deny</span>
+                </div>
+
+        </div>
+
+<% }%>
+</div>

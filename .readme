@@ -1,0 +1,14 @@
+您好 :)，运行本项目需要
+    1、在使用前请使用npm install 安装需要的依赖；
+    2、在本地启动http服务访问index.html即可
+
+这个例子，在IE9、chrome50、firefox47上通过测试
+
+说明：
+    项目使用Backbone 框架、jquery 库、Backbone.localstorage做数据存储
+
+
+我的联系信息：
+姓名：胡海
+电话：135 5001 7615
+E-mail：huhai007@gmail.com

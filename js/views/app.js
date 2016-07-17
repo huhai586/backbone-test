@@ -6,28 +6,54 @@ define(['jquery',
     'underscore',
     'text!../templates/app.html',
     '../collections/collection',
+    '../data/item-data',
+    '../views/list-solo'
 
-], function ($, Backbone,_, _homeTemplate,appCollection,modelSolo) {
+], function ($, Backbone,_, homeTemplate,appCollection,initialData,listSolo) {
 
     var app=Backbone.View.extend({
         el:".app",
-        initialize:function(){
-            this.$el.html("app里面的内容");
-            var c=new appCollection;
-            this.listenTo(c,"add",this.addOne)
-            this.listenTo(c,"change",this.showChange)
-            c.fetch()
-            c.create({name:"123"})
-            c.create({name:"huhai"})
 
-            //c.save()
+        initialize:function(){
+            this.$el.html(_.template(homeTemplate));
+            //初始化collection
+            var itemsCollection=this.itemsCollection=new appCollection;
+            //初始化监听
+            this.listenTo(itemsCollection,"add",this.addOne)
+            //初始化数据
+            this.initialData()
+
+
+
 
         },
-        addOne:function(model){
-            var modelData=model.toJSON();
-            if(modelData.name=='huhai'){
-                model.set({name:"huhai-refreash"})
-            }
+        initialData:function(){
+            var _this=this;
+            this.itemsCollection.fetch({
+                success:function(collection, response){
+                    if(response.length==0){
+                        //没有从localstorage获取到数据，加载默认数据
+                        initialData.map(function(obj){
+                            _this.itemsCollection.create(obj)
+                        })
+                    }
+                }
+            })
+        },
+        events:{
+            "click .nav li":"doNav",
+            "click .categorys div":"doNav"
+        },
+        doNav:function(e){
+            $(e.target).addClass("active").siblings().removeClass("active")
+
+        },
+        addOne:function(curModel){
+            //将数据渲染出来
+            var view =new listSolo({model:curModel});
+            var itemHTML=view.render().el;
+            this.$(".item_list").append(itemHTML);
+
 
     },
         showChange:function(model){
